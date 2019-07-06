@@ -4,7 +4,7 @@ resource "aws_vpc" "default" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "test-vpc"
+    Name = "jitendra-vpc"
   }
 }
 
@@ -61,12 +61,12 @@ resource "aws_route_table_association" "web-public-rt" {
 
 # Define the security group for public subnet
 resource "aws_security_group" "sgweb" {
-  name = "vpc_test_web"
+  name = "vpc_jitendra_web"
   description = "Allow incoming HTTP connections & SSH access"
 
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 8080
+    to_port = 8080
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -106,37 +106,5 @@ resource "aws_security_group" "sgweb" {
   }
 }
 
-# Define the security group for private subnet
-resource "aws_security_group" "sgdb"{
-  name = "sg_test_web"
-  description = "Allow traffic from public subnet"
-
-  ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = "tcp"
-    cidr_blocks = ["${var.public_subnet_cidr}"]
-  }
-
-  ingress {
-    from_port = -1
-    to_port = -1
-    protocol = "icmp"
-    cidr_blocks = ["${var.public_subnet_cidr}"]
-  }
-
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["${var.public_subnet_cidr}"]
-  }
-
-  vpc_id = "${aws_vpc.default.id}"
-
-  tags = {
-    Name = "DB SG"
-  }
-}
 
 

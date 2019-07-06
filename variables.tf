@@ -28,3 +28,19 @@ variable "key_path" {
   description = "SSH Public Key path"
   default = "public_key"
 }
+
+variable "count" {
+    default = 1
+  }
+
+variable "amis" {
+  description = "Base AMI to launch the instances"
+  default = {
+  ap-south-1 = "ami-0d2b3ddf9d639567a"
+  }
+}
+
+variable "region" {
+ description = "AWS region for hosting our your network"
+ default = "ap-south-1"
+}
